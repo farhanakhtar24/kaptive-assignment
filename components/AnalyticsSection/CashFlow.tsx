@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-
+import CustomTable from "@/components/Table/Table";
 import { Box, Stack, Typography } from "@mui/material";
 import DecimalSelector from "./DecimalSelector";
 import CurrenySelector from "./CurrenySelector";
@@ -36,8 +36,7 @@ const CashFlow = (props: Props) => {
 				</Box>
 			</Stack>
 			<Stack justifyContent={"space-between"} direction={"row"}>
-				<div>nasknfkas</div>
-				<div>nasknfkas</div>
+				<CustomTable />
 			</Stack>
 		</Stack>
 	);
