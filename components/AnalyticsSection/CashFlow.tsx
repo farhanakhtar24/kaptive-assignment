@@ -8,7 +8,7 @@ import CurrenySelector from "./CurrenySelector";
 type Props = {};
 
 const CashFlow = (props: Props) => {
-	const [decimals, setDecimals] = React.useState<string>("1");
+	const [decimals, setDecimals] = React.useState<string>("0");
 	const [curreny, setCurrency] = React.useState<string>("USD");
 
 	return (
@@ -36,7 +36,7 @@ const CashFlow = (props: Props) => {
 				</Box>
 			</Stack>
 			<Stack justifyContent={"space-between"} direction={"row"}>
-				<CustomTable />
+				<CustomTable decimals={decimals} />
 			</Stack>
 		</Stack>
 	);

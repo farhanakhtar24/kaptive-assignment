@@ -186,7 +186,7 @@ const Option = styled(BaseOption)(
 );
 
 const Popup = styled("div")`
-	z-index: 1;
+	z-index: 999;
 `;
 
 export default CurrenySelector;
