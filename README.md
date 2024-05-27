@@ -1,3 +1,5 @@
+Try to open it in some other browser if it seems to lag. Might be having an issue with the chromium-based browsers.
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
