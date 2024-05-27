@@ -1,6 +1,12 @@
-export const roundOff = (num: number, dec: string, currency: number) => {
-	return (num * currency).toLocaleString("en-IN", {
+export const roundOff = (
+	num: number,
+	dec: string,
+	conversionObject: { [key: string]: number },
+	currency: string
+) => {
+	return (num * conversionObject[currency]).toLocaleString("en-IN", {
 		maximumFractionDigits: parseInt(dec),
-		currency: "GBP",
+		style: "currency",
+		currency: currency,
 	});
 };

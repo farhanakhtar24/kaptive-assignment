@@ -41,7 +41,7 @@ const CashFlow = ({ conversionObject }: Props) => {
 				<CustomTable
 					decimals={decimals}
 					conversionObject={conversionObject}
-					curreny={curreny}
+					currency={curreny}
 				/>
 			</Stack>
 		</Stack>

@@ -18,13 +18,13 @@ import FileDownloadIcon from "@mui/icons-material/FileDownload";
 type Props = {
 	decimals: string;
 	conversionObject: { [key: string]: number };
-	curreny: string;
+	currency: string;
 };
 
-const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
+const CustomTable = ({ decimals, conversionObject, currency }: Props) => {
 	console.log("decimals", decimals);
-	console.log("conversionObject", conversionObject[curreny]);
-	console.log("curreny", curreny);
+	console.log("conversionObject", conversionObject[currency]);
+	console.log("currency", currency);
 
 	const columns = useMemo<MRT_ColumnDef<Columns>[]>(
 		() => [
@@ -43,7 +43,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.Jan,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -57,7 +58,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.Feb,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -71,7 +73,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.March,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -85,7 +88,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.April,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -99,7 +103,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.May,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -113,7 +118,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.June,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -127,7 +133,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.July,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -141,7 +148,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.August,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -155,7 +163,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.September,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -169,7 +178,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.October,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -183,7 +193,8 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.November,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
@@ -197,13 +208,14 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 						{roundOff(
 							row.original.December,
 							decimals,
-							conversionObject[curreny]
+							conversionObject,
+							currency
 						)}
 					</div>
 				),
 			},
 		],
-		[decimals, curreny, conversionObject]
+		[decimals, currency, conversionObject]
 	);
 
 	const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
@@ -295,7 +307,7 @@ const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
 		const tableData = rows.map((row) =>
 			Object.values(row.original).map((v) =>
 				typeof v === "number"
-					? formatter.format(v * conversionObject[curreny])
+					? formatter.format(v * conversionObject[currency])
 					: v
 			)
 		);
