@@ -5,9 +5,11 @@ import { Box, Stack, Typography } from "@mui/material";
 import DecimalSelector from "./DecimalSelector";
 import CurrenySelector from "./CurrenySelector";
 
-type Props = {};
+type Props = {
+	conversionObject: { [key: string]: number };
+};
 
-const CashFlow = (props: Props) => {
+const CashFlow = ({ conversionObject }: Props) => {
 	const [decimals, setDecimals] = React.useState<string>("0");
 	const [curreny, setCurrency] = React.useState<string>("USD");
 
@@ -36,7 +38,11 @@ const CashFlow = (props: Props) => {
 				</Box>
 			</Stack>
 			<Stack justifyContent={"space-between"} direction={"row"}>
-				<CustomTable decimals={decimals} />
+				<CustomTable
+					decimals={decimals}
+					conversionObject={conversionObject}
+					curreny={curreny}
+				/>
 			</Stack>
 		</Stack>
 	);

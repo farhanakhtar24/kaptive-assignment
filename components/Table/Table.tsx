@@ -10,16 +10,22 @@ import {
 	MaterialReactTable,
 } from "material-react-table";
 import { roundOff } from "@/utils/RoundOff";
-import { jsPDF } from "jspdf"; //or use your library of choice here
+import { jsPDF } from "jspdf";
 import autoTable from "jspdf-autotable";
 import { Box, Button } from "@mui/material";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 type Props = {
 	decimals: string;
+	conversionObject: { [key: string]: number };
+	curreny: string;
 };
 
-const CustomTable = ({ decimals }: Props) => {
+const CustomTable = ({ decimals, conversionObject, curreny }: Props) => {
+	console.log("decimals", decimals);
+	console.log("conversionObject", conversionObject[curreny]);
+	console.log("curreny", curreny);
+
 	const columns = useMemo<MRT_ColumnDef<Columns>[]>(
 		() => [
 			{
@@ -33,7 +39,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "Jan",
 				accessorKey: "Jan",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.Jan, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.Jan,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -41,7 +53,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "Feb",
 				accessorKey: "Feb",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.Feb, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.Feb,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -49,7 +67,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "March",
 				accessorKey: "March",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.March, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.March,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -57,7 +81,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "April",
 				accessorKey: "April",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.April, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.April,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -65,7 +95,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "May",
 				accessorKey: "May",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.May, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.May,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -73,7 +109,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "June",
 				accessorKey: "June",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.June, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.June,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -81,7 +123,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "July",
 				accessorKey: "July",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.July, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.July,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -89,7 +137,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "August",
 				accessorKey: "August",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.August, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.August,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -97,7 +151,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "September",
 				accessorKey: "September",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.September, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.September,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -105,7 +165,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "October",
 				accessorKey: "October",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.October, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.October,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -113,7 +179,13 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "November",
 				accessorKey: "November",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.November, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.November,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 			{
@@ -121,11 +193,17 @@ const CustomTable = ({ decimals }: Props) => {
 				header: "December",
 				accessorKey: "December",
 				Cell: ({ row }) => (
-					<div>{roundOff(row.original.December, decimals)}</div>
+					<div>
+						{roundOff(
+							row.original.December,
+							decimals,
+							conversionObject[curreny]
+						)}
+					</div>
 				),
 			},
 		],
-		[decimals]
+		[decimals, curreny, conversionObject]
 	);
 
 	const rowVirtualizerInstanceRef = useRef<MRT_RowVirtualizer>(null);
@@ -135,10 +213,8 @@ const CustomTable = ({ decimals }: Props) => {
 	const [data, setData] = useState<Columns[]>(SheetData.Sheet1);
 
 	const table = useMaterialReactTable({
-		autoResetPageIndex: false,
 		columns,
 		data,
-		enableBottomToolbar: true,
 		enablePagination: false,
 		enableRowNumbers: true,
 		enableRowVirtualization: true,
@@ -150,7 +226,7 @@ const CustomTable = ({ decimals }: Props) => {
 			sorting,
 		},
 		rowVirtualizerInstanceRef, //optional
-		rowVirtualizerOptions: { overscan: 10 },
+		rowVirtualizerOptions: { overscan: 5 },
 		muiTableContainerProps: { sx: { maxHeight: "600px" } },
 		muiRowDragHandleProps: ({ table }) => ({
 			onDragEnd: () => {
@@ -218,7 +294,9 @@ const CustomTable = ({ decimals }: Props) => {
 		const formatter = Intl.NumberFormat("en", { notation: "compact" });
 		const tableData = rows.map((row) =>
 			Object.values(row.original).map((v) =>
-				typeof v === "number" ? formatter.format(v) : v
+				typeof v === "number"
+					? formatter.format(v * conversionObject[curreny])
+					: v
 			)
 		);
 		const tableHeaders = columns.map((c) => c.header);

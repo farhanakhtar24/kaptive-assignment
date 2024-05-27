@@ -4,7 +4,9 @@ import React from "react";
 import TopButtons from "./TopButtons";
 import CashFlow from "./CashFlow";
 
-type Props = {};
+type Props = {
+	conversionObject: { [key: string]: number };
+};
 
 const AnalyticsContainer = styled(Paper)(({ theme }) => ({
 	padding: theme.spacing(2),
@@ -15,11 +17,11 @@ const AnalyticsContainer = styled(Paper)(({ theme }) => ({
 	width: "100%",
 }));
 
-const AnalyticsSection = (props: Props) => {
+const AnalyticsSection = ({ conversionObject }: Props) => {
 	return (
 		<AnalyticsContainer elevation={4}>
 			<TopButtons />
-			<CashFlow />
+			<CashFlow conversionObject={conversionObject} />
 		</AnalyticsContainer>
 	);
 };
