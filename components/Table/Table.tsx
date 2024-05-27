@@ -6,10 +6,14 @@ import {
 	type MRT_ColumnDef,
 	type MRT_Row,
 	type MRT_RowVirtualizer,
-	MRT_TableContainer,
 	MRT_SortingState,
+	MaterialReactTable,
 } from "material-react-table";
 import { roundOff } from "@/utils/RoundOff";
+import { jsPDF } from "jspdf"; //or use your library of choice here
+import autoTable from "jspdf-autotable";
+import { Box, Button } from "@mui/material";
+import FileDownloadIcon from "@mui/icons-material/FileDownload";
 
 type Props = {
 	decimals: string;
@@ -134,15 +138,20 @@ const CustomTable = ({ decimals }: Props) => {
 		autoResetPageIndex: false,
 		columns,
 		data,
-		enableBottomToolbar: false,
+		enableBottomToolbar: true,
 		enablePagination: false,
 		enableRowNumbers: true,
 		enableRowVirtualization: true,
 		enableRowOrdering: true,
+		enableRowSelection: true,
 		onSortingChange: setSorting,
-		state: { isLoading, sorting },
+		state: {
+			isLoading,
+			sorting,
+		},
 		rowVirtualizerInstanceRef, //optional
 		rowVirtualizerOptions: { overscan: 10 },
+		muiTableContainerProps: { sx: { maxHeight: "600px" } },
 		muiRowDragHandleProps: ({ table }) => ({
 			onDragEnd: () => {
 				const { draggingRow, hoveredRow } = table.getState();
@@ -156,7 +165,71 @@ const CustomTable = ({ decimals }: Props) => {
 				}
 			},
 		}),
+		renderTopToolbarCustomActions: ({ table }) => (
+			<Box
+				sx={{
+					display: "flex",
+					gap: "16px",
+					padding: "8px",
+					flexWrap: "wrap",
+				}}>
+				<Button
+					disabled={
+						table.getPrePaginationRowModel().rows.length === 0
+					}
+					//export all rows, including from the next page, (still respects filtering and sorting)
+					onClick={() =>
+						handleExportRows(table.getPrePaginationRowModel().rows)
+					}
+					startIcon={<FileDownloadIcon />}>
+					Export All Rows
+				</Button>
+				<Button
+					disabled={table.getRowModel().rows.length === 0}
+					//export all rows as seen on the screen (respects pagination, sorting, filtering, etc.)
+					onClick={() => handleExportRows(table.getRowModel().rows)}
+					startIcon={<FileDownloadIcon />}>
+					Export Page Rows
+				</Button>
+				<Button
+					disabled={
+						!table.getIsSomeRowsSelected() &&
+						!table.getIsAllRowsSelected()
+					}
+					//only export selected rows
+					onClick={() =>
+						handleExportRows(table.getSelectedRowModel().rows)
+					}
+					startIcon={<FileDownloadIcon />}>
+					Export Selected Rows
+				</Button>
+			</Box>
+		),
 	});
+
+	const handleExportRows = (rows: MRT_Row<Columns>[]) => {
+		const doc = new jsPDF({
+			orientation: "l",
+			unit: "mm",
+			format: "a4",
+			putOnlyUsedFonts: true,
+			floatPrecision: 16,
+		});
+		const formatter = Intl.NumberFormat("en", { notation: "compact" });
+		const tableData = rows.map((row) =>
+			Object.values(row.original).map((v) =>
+				typeof v === "number" ? formatter.format(v) : v
+			)
+		);
+		const tableHeaders = columns.map((c) => c.header);
+
+		autoTable(doc, {
+			head: [tableHeaders],
+			body: tableData,
+		});
+
+		doc.save("mrt-pdf-example.pdf");
+	};
 
 	useEffect(() => {
 		if (typeof window !== "undefined") {
@@ -177,7 +250,7 @@ const CustomTable = ({ decimals }: Props) => {
 		console.log("re-render");
 	});
 
-	return <MRT_TableContainer table={table} />;
+	return <MaterialReactTable table={table} />;
 };
 
 export default CustomTable;
